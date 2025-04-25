@@ -2,6 +2,7 @@
 import { getQueryMap } from '../../src/helpers/quellHelpers';
 import schema from '../../test-config/testSchema';
 import schemaWithoutQueries from '../../test-config/testSchemaWithoutQueries';
+import { describe, test, expect, beforeAll, afterAll, it } from '@jest/globals';
 
 describe('server side tests for getQueryMap', () => {
   afterAll((done) => {

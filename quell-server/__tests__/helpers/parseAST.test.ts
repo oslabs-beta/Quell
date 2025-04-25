@@ -1,5 +1,6 @@
 import { parse } from 'graphql/language/parser';
 import { parseAST } from '../../src/helpers/quellHelpers';
+import { describe, test, expect, beforeAll, afterAll, it } from '@jest/globals';
 
 describe('server tests for parseAST', () => {
 
@@ -123,7 +124,7 @@ describe('server tests for parseAST', () => {
     expect(operationType).toEqual('query');
   });
 
-  xtest('should reject query without id for', () => {
+  test('should reject query without id for', () => {
     const query = `{
       countries { 
         id 

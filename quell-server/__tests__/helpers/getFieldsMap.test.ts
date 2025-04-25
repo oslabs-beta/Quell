@@ -2,6 +2,7 @@
 import { getFieldsMap } from "../../src/helpers/quellHelpers";
 const schema = require("../../test-config/testSchema");
 const schemaWithoutFields = require("../../test-config/testSchemaWithoutFields");
+import { describe, test, expect, beforeAll, afterAll, it } from '@jest/globals';
 
 describe("server side tests for getFieldsMap", () => {
   afterAll((done) => {

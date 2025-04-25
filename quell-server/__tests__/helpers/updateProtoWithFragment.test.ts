@@ -1,4 +1,5 @@
 import { updateProtoWithFragment } from '../../src/helpers/quellHelpers';
+import { describe, test, expect, beforeAll, afterAll, it } from '@jest/globals';
 
 describe('tests for update prototype with fragments on the server side', () => {
   test('basic prototype object with 2 fields and a fragment, should convert to a protoype with 2 fields and the fields from the fragment without the fragment key on the prototype object', () => {

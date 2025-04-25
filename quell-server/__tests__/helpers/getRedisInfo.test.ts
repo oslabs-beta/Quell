@@ -3,9 +3,10 @@ import app from '../../test-config/test-server';
 import { QuellCache } from '../../src/quell';
 import schema from '../../test-config/testSchema';
 import { getRedisInfo } from '../../src/helpers/redisHelpers';
+import { describe, test, expect, beforeAll, afterAll, it } from '@jest/globals';
 
 // tests pass locally, but time out in travis CI build...
-xdescribe('server test for getRedisInfo', () => {
+describe('server test for getRedisInfo', () => {
   const Quell = new QuellCache({
     schema: schema,
     redisPort: Number(process.env.REDIS_PORT) || 6379,
@@ -57,12 +58,12 @@ xdescribe('server test for getRedisInfo', () => {
     Quell.redisCache.quit();
   });
 
-  it('responds with a 200 status code', async () => {
+  test('responds with a 200 status code', async () => {
     const response = await request(app).get('/redis');
     expect(response.statusCode).toBe(200);
   });
 
-  it('gets stats from redis cache', async () => {
+  test('gets stats from redis cache', async () => {
     const response = await request(app).get('/redis');
     const redisStats = response.body.redisStats;
     expect(Object.keys(redisStats)).toEqual([
@@ -73,7 +74,7 @@ xdescribe('server test for getRedisInfo', () => {
     ]);
   });
 
-  it('gets keys from redis cache', async () => {
+  test('gets keys from redis cache', async () => {
     const response = await request(app).get('/redis');
     const redisKeys = response.body.redisKeys;
     expect(redisKeys).toEqual([
@@ -84,7 +85,7 @@ xdescribe('server test for getRedisInfo', () => {
     ]);
   });
 
-  it('gets values from redis cache', async () => {
+  test('gets values from redis cache', async () => {
     const response = await request(app).get('/redis');
     const redisValues = response.body.redisValues;
     expect(redisValues).toEqual([

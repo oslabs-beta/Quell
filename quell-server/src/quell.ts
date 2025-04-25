@@ -146,7 +146,9 @@ export class QuellCache {
       req.body.costOptions?.ipRate ?? this.costParameters.ipRate;
 
     // Get the IP address from the request.
-    const ipAddress: string = req.ip;
+    //! we are getting an error here where the ipAddress is possibly undifined. trying to sus out if i need to change the type declaration here or to modify the test
+    
+    const ipAddress: string = req.ip || "" ;
     // Get the current time in seconds.
     const currentTimeSeconds: number = Math.floor(Date.now() / 1000);
     // Create a Redis IP key using the IP address and current time.
