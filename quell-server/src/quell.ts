@@ -519,13 +519,19 @@ export class QuellCache {
       // If the current key is a root query, check cache and set any results to itemFromCache.
       if (prototypeKeys.includes(typeKey)) {
         // Create a variable cacheID, used to determine what ID should be used for the Redis lookup.
-        let cacheID: string;
-        if (typeof subID === "string") {
-          // Use the subID argument if it is a string (used for recursive calls within buildFromCache).
-          cacheID = subID;
-        } else {
-          cacheID = this.generateCacheID(prototype[typeKey] as ProtoObjType);
-        }
+        let cacheID = typeof subID === 'string'
+          ? subID
+          : this.generateCacheID(prototype[typeKey] as ProtoObjType);
+
+
+        //! to be removed once tests pass
+        // if (typeof subID === "string") {
+        //   // Use the subID argument if it is a string (used for recursive calls within buildFromCache).
+        //   cacheID = subID;
+        // } else {
+        //   cacheID = this.generateCacheID(prototype[typeKey] as ProtoObjType);
+        // }
+        //! end above 
 
         let keyName: string | undefined;
         // Value won't always be at .name on the args object

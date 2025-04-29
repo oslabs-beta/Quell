@@ -10,7 +10,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "jest --verbose --forceExit",
     "clear-cache": "node bin/clearCache.js",
     "build": "tsc"
   },
