@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { createHash } from 'crypto';
 import { RedisClientType } from 'redis';
 
+const debugEvents: any[] = [];
 /**
  * Interface for endpoints configuration
  * Keys are endpoint paths, values are either 'local' or API URLs
@@ -84,9 +85,27 @@ export function createQuellRouter(options: QuellRouterOptions) {
       try {
         // Check if response is cached
         const cachedResponse = await cache.get(cacheKey);
+
+        if (debug) {
+          const result = cachedResponse ? 'HIT' : 'MISS';
+          debugEvents.push({
+            time: new Date().toISOString(),
+            type: 'query',
+            api: apiName,
+            cacheKey,
+            result,
+            operation: operationName || 'Unnamed',
+          });
+        }
+        
+
+        if (debug){
+          console.log(`[QUELL DEBUG] ${cacheKey} -> ${cachedResponse ? 'HIT' : 'MISS'}`);
+        }
         
         if (cachedResponse) {
-          if (debug) console.log(`QUELL ROUTER: Cache hit for ${apiName}`);
+          if (debug) console.log(`QUELL ROUTER: Cache hit for ${apiName}`); 
+          //helps with cross referencing 
           
           // Parse the cached response
           const parsedResponse = JSON.parse(cachedResponse);
@@ -214,6 +233,10 @@ export function createQuellRouter(options: QuellRouterOptions) {
       return 0;
     }
   };
+// Debug route to show recent events
+  (routerMiddleware as any).get('/quell-debug', (req, res) => {
+  res.json(debugEvents.slice(-20));
+});
 
   return routerMiddleware;
 }
